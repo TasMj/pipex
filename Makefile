@@ -6,13 +6,13 @@
 #    By: tas <tas@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/29 14:49:47 by tmejri            #+#    #+#              #
-#    Updated: 2023/01/07 11:29:26 by tas              ###   ########.fr        #
+#    Updated: 2023/01/08 17:27:10 by tas              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= pipex
 
-SRCS			= main.c ft_split.c tools.c \
+SRCS			= main.c ft_split.c tools.c for_pipex.c \
 
 OBJS			= ${SRCS:.c=.o}
 
