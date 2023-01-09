@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 18:15:10 by tas               #+#    #+#             */
-/*   Updated: 2023/01/09 15:46:44 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/01/09 15:53:06 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,11 @@ int	first_child(t_pipex *pipex, char **__environ)
 	if (pipex->pid1 == 0)
 	{
 		close(pipex->pip[0]);
-		dup2(1, pipex->pip[1]);
+		dup2(pipex->pip[1], 1);
 		dup2(pipex->infile_fd, 0);
 		close(pipex->pip[1]);
+		close(pipex->outfile_fd);
+		close(pipex->infile_fd);
 		execve(pipex->path_cmd1, pipex->argv_cmd1, __environ);
 	}
 	return (0);
@@ -108,8 +110,10 @@ int	second_child(t_pipex *pipex, char **__environ)
 	{
 		close(pipex->pip[1]);
 		dup2(pipex->pip[0], 0);
-		// dup2(pipex->outfile_fd, 1);
+		dup2(pipex->outfile_fd, 1);
 		close(pipex->pip[0]);
+		close(pipex->outfile_fd);
+		close(pipex->infile_fd);
 		execve(pipex->path_cmd2, pipex->argv_cmd2, __environ);
 	}
 	return (0);

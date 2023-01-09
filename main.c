@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:51:40 by tmejri            #+#    #+#             */
-/*   Updated: 2023/01/09 15:29:42 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/01/09 15:53:54 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,15 @@ int	main(int argc, char **argv, char **__environ)
 		return (1);
 	init_param_pipex(&pipex, argv, __environ);
 	pipex.pid1 = fork();
-	// if (pipex.pid1 == 0)
+	if (pipex.pid1 == 0)
 		first_child(&pipex, __environ);	
 	pipex.pid2 = fork();
-	// if (pipex.pid2 == 0)
+	if (pipex.pid2 == 0)
 		second_child(&pipex, __environ);
 	close(pipex.pip[0]);
 	close(pipex.pip[1]);
+	close(pipex.outfile_fd);
+	close(pipex.infile_fd);
 	waitpid(pipex.pid1, NULL, 0);
 	waitpid(pipex.pid2, NULL, 0);
 	//free
