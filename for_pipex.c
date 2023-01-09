@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   for_pipex.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 18:15:10 by tas               #+#    #+#             */
-/*   Updated: 2023/01/08 17:44:16 by tas              ###   ########.fr       */
+/*   Updated: 2023/01/09 15:46:44 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,30 @@ char	*find_path(char **env)
 	return (NULL);
 }
 
+char *get_arg(char **argv, int nb)
+{
+	int i;
+
+	i = 0;
+	if (argv[nb][i] != '/')
+		return (argv[nb]);
+	else
+	{
+		i++;
+		while (argv[nb][i] != '/')
+			i++;
+	}
+	return (argv[nb] + i + 1);
+}
+
 int	init_param_pipex(t_pipex *pipex, char **argv, char **__environ)
 {
     (void)__environ;
 	pipex->path = find_path(__environ);
-    pipex->path_cmd1 = ft_strjoin(pipex->path, argv[2]);
-	pipex->path_cmd2 = ft_strjoin(pipex->path, argv[3]);
-	pipex->argv_cmd1 = ft_split(argv[2], ' ');
-	pipex->argv_cmd2 = ft_split(argv[3], ' ');
+    pipex->path_cmd1 = ft_strjoin(pipex->path, get_arg(argv, 2));
+	pipex->path_cmd2 = ft_strjoin(pipex->path, get_arg(argv, 3));
+	pipex->argv_cmd1 = ft_split(get_arg(argv, 2), ' ');
+	pipex->argv_cmd2 = ft_split(get_arg(argv, 3), ' ');
     
     // printf("path: %s\n\n", pipex->path);
 	// printf("cmd1: [%s]\n\n", pipex->path_cmd1);
@@ -74,9 +90,10 @@ int	first_child(t_pipex *pipex, char **__environ)
 {
 	if (pipex->pid1 == 0)
 	{
-		dup2(pipex->pip[1], 1);
 		close(pipex->pip[0]);
-		dup2(pipex->infile, 0);
+		dup2(1, pipex->pip[1]);
+		dup2(pipex->infile_fd, 0);
+		close(pipex->pip[1]);
 		execve(pipex->path_cmd1, pipex->argv_cmd1, __environ);
 	}
 	return (0);
@@ -85,11 +102,14 @@ int	first_child(t_pipex *pipex, char **__environ)
 
 int	second_child(t_pipex *pipex, char **__environ)
 {
+	if (pipex->pid2 < 0)
+		return (2);
 	if (pipex->pid2 == 0)
 	{
-		dup2(pipex->pip[0], 0);
 		close(pipex->pip[1]);
-		dup2(pipex->outfile, 1);
+		dup2(pipex->pip[0], 0);
+		// dup2(pipex->outfile_fd, 1);
+		close(pipex->pip[0]);
 		execve(pipex->path_cmd2, pipex->argv_cmd2, __environ);
 	}
 	return (0);

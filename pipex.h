@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:50:58 by tmejri            #+#    #+#             */
-/*   Updated: 2023/01/08 17:36:00 by tas              ###   ########.fr       */
+/*   Updated: 2023/01/09 15:28:30 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ typedef struct s_cmd
 
 typedef struct s_pipex
 {
-    int     infile;
-    int     outfile;
+    int     infile_fd;
+    int     outfile_fd;
     int     pip[2];
     pid_t     pid1;
     pid_t     pid2;
