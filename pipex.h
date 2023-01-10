@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:50:58 by tmejri            #+#    #+#             */
-/*   Updated: 2023/01/10 14:16:49 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/01/10 16:38:39 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,12 @@ int     open_files(t_pipex *pipex, int argc, char **argv);
 int     init_param_pipex(t_pipex *pipex, char **argv, char **__environ);
 int     first_child(t_pipex *pipex, char **__environ);
 int     second_child(t_pipex *pipex, char **__environ);
-int	try_acces(char *path, char *argv);
+int     try_acces(char *path, char *argv);
+int     err_msg(int n);
+void    free_tab(char **tab);
+char    *get_arg(char **argv, int nb);
+
+
 
 
 
