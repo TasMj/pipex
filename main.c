@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:51:40 by tmejri            #+#    #+#             */
-/*   Updated: 2023/01/10 16:45:22 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/01/10 17:56:22 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **__environ)
 	close(pipex.infile_fd);
 	waitpid(pipex.pid1, NULL, 0);
 	waitpid(pipex.pid2, NULL, 0);
-	
+	free_end(&pipex);
 
 	
 

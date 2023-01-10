@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 18:15:10 by tas               #+#    #+#             */
-/*   Updated: 2023/01/10 16:55:05 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/01/10 18:19:08 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ int	try_acces(char *path, char *argv)
 	
 	s = ft_strjoin(path, "/");
 	s = ft_strjoin(s, argv);
+	// free(path);
 	if (access(s, F_OK | X_OK) == 0)
 	{
-		free(s);	
+		free(s);
 		return (0);
 	}
 	free(s);	
@@ -51,7 +52,7 @@ char	*find_path(char **env, char *argv)
 				{
 					path_without_points = ft_strjoin(path_split[j], "/");
 					path_without_points = ft_strjoin(path_without_points, argv);
-					free_tab(path_split);	
+					free_tab(path_split);
 					return (path_without_points);
 				}
 				j++;
@@ -59,6 +60,7 @@ char	*find_path(char **env, char *argv)
 		}
 		i++;
 	}
+	free_tab(path_split);	
 	return (NULL);
 }
 
