@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+         #
+#    By: tas <tas@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/29 14:49:47 by tmejri            #+#    #+#              #
-#    Updated: 2023/01/10 16:37:28 by tmejri           ###   ########.fr        #
+#    Updated: 2023/01/11 00:14:24 by tas              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= pipex
 
-SRCS			= main.c ft_split.c tools.c for_pipex.c error.c free.c \
+SRCS			= error.c for_pipex.c free.c ft_split.c main.c tools.c  \
 
 OBJS			= ${SRCS:.c=.o}
 

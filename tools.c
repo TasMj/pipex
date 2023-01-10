@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 11:28:38 by tas               #+#    #+#             */
-/*   Updated: 2023/01/10 18:14:30 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/01/11 00:23:43 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (str[i])
-        i++;
-    return (i);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
@@ -52,7 +52,7 @@ int	ft_strncmp(char *s1, char *s2, size_t n)
 {
 	char	*ss1;
 	char	*ss2;
-	size_t		i;
+	size_t	i;
 
 	ss1 = s1;
 	ss2 = s2;
