@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 18:15:10 by tas               #+#    #+#             */
-/*   Updated: 2023/01/09 15:53:06 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/01/10 14:24:15 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,22 @@
 // 	return (0);
 // }
 
+int	try_acces(char *path, char *argv)
+{
+	char *s;
+	
+	s = ft_strjoin(path, "/");
+	s = ft_strjoin(s, argv);
+	if (access(s, F_OK | X_OK) == 0)
+	{
+		free(s);	
+		return (0);
+	}
+	free(s);	
+	return(1);
+}
 
-char	*find_path(char **env)
+char	*find_path(char **env, char *argv)
 {
 	int		i;
 	int		j;
@@ -44,11 +58,14 @@ char	*find_path(char **env)
 			path_without_points = path_stockage[0];
 			while (path_stockage[j])
 			{
-				path_without_points = ft_strjoin(path_without_points, path_stockage[j]);
-                j++;	
+				if (try_acces(path_stockage[j], argv) == 0)
+				{
+					path_without_points = ft_strjoin(path_stockage[j], "/");
+					path_without_points = ft_strjoin(path_without_points, argv);
+					return (path_without_points);
+				}
+				j++;
 			}
-			path_without_points = ft_strjoin(path_without_points, "/");
-			return (path_without_points);
 		}
 		i++;
 	}
@@ -73,30 +90,32 @@ char *get_arg(char **argv, int nb)
 
 int	init_param_pipex(t_pipex *pipex, char **argv, char **__environ)
 {
-    (void)__environ;
-	pipex->path = find_path(__environ);
-    pipex->path_cmd1 = ft_strjoin(pipex->path, get_arg(argv, 2));
-	pipex->path_cmd2 = ft_strjoin(pipex->path, get_arg(argv, 3));
+    pipex->path_cmd1 = find_path(__environ, get_arg(argv, 2));
+	pipex->path_cmd2 = find_path(__environ, get_arg(argv, 3));
 	pipex->argv_cmd1 = ft_split(get_arg(argv, 2), ' ');
 	pipex->argv_cmd2 = ft_split(get_arg(argv, 3), ' ');
     
-    // printf("path: %s\n\n", pipex->path);
-	// printf("cmd1: [%s]\n\n", pipex->path_cmd1);
-	// printf("cmd2: [%s]\n\n", pipex->path_cmd2);
+	printf("cmd1: [%s]\n\n", pipex->path_cmd1);
+	printf("cmd2: [%s]\n\n", pipex->path_cmd2);
 	return (0);
 }
 
 int	first_child(t_pipex *pipex, char **__environ)
 {
+
 	if (pipex->pid1 == 0)
 	{
-		close(pipex->pip[0]);
-		dup2(pipex->pip[1], 1);
 		dup2(pipex->infile_fd, 0);
+		dup2(pipex->pip[1], 1);
+		close(pipex->pip[0]);
 		close(pipex->pip[1]);
-		close(pipex->outfile_fd);
 		close(pipex->infile_fd);
+		close(pipex->outfile_fd);
+		// printf("cmd1: [%s]\n\n", pipex->path_cmd1);
+		// printf("cmd2: [%s]\n\n", pipex->path_cmd2);
+
 		execve(pipex->path_cmd1, pipex->argv_cmd1, __environ);
+		
 	}
 	return (0);
 }
@@ -104,14 +123,15 @@ int	first_child(t_pipex *pipex, char **__environ)
 
 int	second_child(t_pipex *pipex, char **__environ)
 {
+	pipex->pid1 = fork();
 	if (pipex->pid2 < 0)
-		return (2);
+		return (1);
 	if (pipex->pid2 == 0)
 	{
-		close(pipex->pip[1]);
 		dup2(pipex->pip[0], 0);
 		dup2(pipex->outfile_fd, 1);
 		close(pipex->pip[0]);
+		close(pipex->pip[1]);
 		close(pipex->outfile_fd);
 		close(pipex->infile_fd);
 		execve(pipex->path_cmd2, pipex->argv_cmd2, __environ);

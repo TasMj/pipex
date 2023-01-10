@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:50:58 by tmejri            #+#    #+#             */
-/*   Updated: 2023/01/09 15:28:30 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/01/10 14:16:49 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,14 @@ char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char *s1, char *s2);
 int     ft_strncmp(char *s1, char *s2, size_t n);
 int     ft_strlen(char *str);
-char	*find_path(char **env);
+char	*find_path(char **env, char *argv);
 int     open_files(t_pipex *pipex, int argc, char **argv);
 int     init_param_pipex(t_pipex *pipex, char **argv, char **__environ);
 int     first_child(t_pipex *pipex, char **__environ);
 int     second_child(t_pipex *pipex, char **__environ);
+int	try_acces(char *path, char *argv);
+
+
 
 
 
