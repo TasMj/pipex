@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:51:40 by tmejri            #+#    #+#             */
-/*   Updated: 2023/01/11 00:22:58 by tas              ###   ########.fr       */
+/*   Updated: 2023/01/11 09:52:37 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	main(int argc, char **argv, char **__environ)
 		return (err_msg(2));
 	if (pipe(pipex.pip) == -1)
 		return (err_msg(3));
-	init_param_pipex(&pipex, argv, __environ);
+	if (init_param_pipex(&pipex, argv, __environ) == 2)
+		return (1);
 	first_child(&pipex, __environ);
 	second_child(&pipex, __environ);
 	close(pipex.pip[0]);

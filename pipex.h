@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:50:58 by tmejri            #+#    #+#             */
-/*   Updated: 2023/01/11 00:27:06 by tas              ###   ########.fr       */
+/*   Updated: 2023/01/11 09:45:16 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ char	**ft_split(char const *s, char c);
 
 // ERROR & FREE
 int		err_msg(int n);
+int		err_msg_free(int n, t_pipex *pipex);
 void	free_tab(char **tab);
 void	free_end(t_pipex *pipex);
 

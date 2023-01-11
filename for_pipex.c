@@ -6,7 +6,7 @@
 /*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 18:15:10 by tas               #+#    #+#             */
-/*   Updated: 2023/01/11 00:20:35 by tas              ###   ########.fr       */
+/*   Updated: 2023/01/11 09:53:47 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,17 @@ char	*find_path(char **env, char *argv)
 int	init_param_pipex(t_pipex *pipex, char **argv, char **__environ)
 {
 	pipex->path_cmd1 = find_path(__environ, get_arg(argv, 2));
+	if (!pipex->path_cmd1)
+		return (err_msg_free(5, pipex));
 	pipex->path_cmd2 = find_path(__environ, get_arg(argv, 3));
+	if (!pipex->path_cmd2)
+		return (err_msg_free(6, pipex));
 	pipex->argv_cmd1 = ft_split(get_arg(argv, 2), ' ');
+	if (!pipex->argv_cmd1)
+		return (err_msg_free(7, pipex));
 	pipex->argv_cmd2 = ft_split(get_arg(argv, 3), ' ');
+	if (!pipex->argv_cmd2)
+		return (err_msg_free(8, pipex));
 	return (0);
 }
 
