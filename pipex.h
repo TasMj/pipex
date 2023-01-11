@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:50:58 by tmejri            #+#    #+#             */
-/*   Updated: 2023/01/11 09:45:16 by tas              ###   ########.fr       */
+/*   Updated: 2023/01/11 14:26:42 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,16 @@ int		second_child(t_pipex *pipex, char **__environ);
 
 // TOOLS
 int		ft_strlen(char *str);
-char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strjoin_mod(char *s1, char *s2, int mode);
 int		ft_strncmp(char *s1, char *s2, size_t n);
-char	**ft_split(char const *s, char c);
+char	**ft_split(char *s, char c);
 
 // ERROR & FREE
 int		err_msg(int n);
 int		err_msg_free(int n, t_pipex *pipex);
 void	free_tab(char **tab);
 void	free_end(t_pipex *pipex);
+void	free_all(char *s1, char *s2);
+void	close_all(t_pipex *pipex);
 
 #endif

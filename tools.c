@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 11:28:38 by tas               #+#    #+#             */
-/*   Updated: 2023/01/11 00:23:43 by tas              ###   ########.fr       */
+/*   Updated: 2023/01/11 14:05:25 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin_mod(char *s1, char *s2, int mode)
 {
+	int		i;
+	int		j;
 	char	*dest;
-	size_t	i;
-	size_t	j;
 
 	i = 0;
 	j = 0;
 	dest = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (dest == 0)
+	if (!s1 || !s2)
 		return (NULL);
 	while (s1[i])
 	{
@@ -39,12 +39,14 @@ char	*ft_strjoin(char *s1, char *s2)
 		i++;
 	}
 	while (s2[j])
-	{
-		dest[i] = s2[j];
-		i++;
-		j++;
-	}
+		dest[i++] = s2[j++];
 	dest[i] = '\0';
+	if (mode == 1)
+		free(s1);
+	else if (mode == 2)
+		free(s2);
+	else if (mode == 3)
+		free_all(s1, s2);
 	return (dest);
 }
 

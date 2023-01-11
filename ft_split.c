@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 16:21:34 by tas               #+#    #+#             */
-/*   Updated: 2023/01/10 23:18:27 by tas              ###   ########.fr       */
+/*   Updated: 2023/01/11 13:41:12 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*ft_copy(char *dest, char const *s, char c)
 	return (dest);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char *s, char c)
 {
 	char	**s_split;
 	size_t	i;

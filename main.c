@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:51:40 by tmejri            #+#    #+#             */
-/*   Updated: 2023/01/11 09:52:37 by tas              ###   ########.fr       */
+/*   Updated: 2023/01/11 14:31:45 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	main(int argc, char **argv, char **__environ)
 {
 	t_pipex	pipex;
 
+	if (!__environ)
+		return (err_msg(0));
 	if (argc != 5)
 		return (err_msg(1));
 	pipex.infile_fd = open(argv[1], O_RDONLY);
@@ -30,10 +32,7 @@ int	main(int argc, char **argv, char **__environ)
 		return (1);
 	first_child(&pipex, __environ);
 	second_child(&pipex, __environ);
-	close(pipex.pip[0]);
-	close(pipex.pip[1]);
-	close(pipex.outfile_fd);
-	close(pipex.infile_fd);
+	close_all(&pipex);
 	waitpid(pipex.pid1, NULL, 0);
 	waitpid(pipex.pid2, NULL, 0);
 	free_end(&pipex);
