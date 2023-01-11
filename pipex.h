@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:50:58 by tmejri            #+#    #+#             */
-/*   Updated: 2023/01/11 14:26:42 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/01/11 17:46:28 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@
 # include <unistd.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+
+typedef struct s_path
+{
+	int		i;
+	int		j;
+	char	*path_with_points;
+	char	*path_without;
+	char	**path_split;
+}t_path;
 
 typedef struct s_pipex
 {
@@ -35,8 +44,8 @@ typedef struct s_pipex
 
 // FOR PIPEX
 int		try_acces(char *path, char *argv);
-char	*find_path(char **env, char *argv);
-int		init_param_pipex(t_pipex *pipex, char **argv, char **__environ);
+char	*find_path(char **env, char *argv, t_path p);
+int		init_param(t_pipex *pipex, char **argv, char **__environ, t_path p);
 char	*get_arg(char **argv, int nb);
 int		first_child(t_pipex *pipex, char **__environ);
 int		second_child(t_pipex *pipex, char **__environ);

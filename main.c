@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:51:40 by tmejri            #+#    #+#             */
-/*   Updated: 2023/01/11 14:31:45 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/01/11 17:46:39 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(int argc, char **argv, char **__environ)
 {
 	t_pipex	pipex;
+	t_path	p;
 
 	if (!__environ)
 		return (err_msg(0));
@@ -28,7 +29,7 @@ int	main(int argc, char **argv, char **__environ)
 		return (err_msg(2));
 	if (pipe(pipex.pip) == -1)
 		return (err_msg(3));
-	if (init_param_pipex(&pipex, argv, __environ) == 2)
+	if (init_param(&pipex, argv, __environ, p) == 2)
 		return (1);
 	first_child(&pipex, __environ);
 	second_child(&pipex, __environ);

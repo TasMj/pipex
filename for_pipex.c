@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   for_pipex.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 18:15:10 by tas               #+#    #+#             */
-/*   Updated: 2023/01/11 14:49:21 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/01/11 17:46:57 by tas              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,46 +27,40 @@ int	try_acces(char *path, char *argv)
 	return (1);
 }
 
-char	*find_path(char **env, char *argv)
+char	*find_path(char **env, char *argv, t_path p)
 {
-	int		i;
-	int		j;
-	char	*path_with_points;
-	char	*path_without_points;
-	char	**path_split;
-
-	i = 0;
-	j = 1;
-	while (env[i])
+	p.i = 0;
+	p.j = 0;
+	while (env[p.i])
 	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
+		if (ft_strncmp(env[p.i], "PATH=", 5) == 0)
 		{
-			path_with_points = env[i] + 5;
-			path_split = ft_split(path_with_points, ':');
-			while (path_split[j])
+			p.path_with_points = env[p.i] + 5;
+			p.path_split = ft_split(p.path_with_points, ':');
+			while (p.path_split[p.j])
 			{
-				if (try_acces(path_split[j], argv) == 0)
+				if (try_acces(p.path_split[p.j], argv) == 0)
 				{
-					path_without_points = ft_strjoin_mod(path_split[j], "/", 0);
-					path_without_points = ft_strjoin_mod(path_without_points, argv, 1);
-					free_tab(path_split);
-					return (path_without_points);
+					p.path_without = ft_strjoin_mod(p.path_split[p.j], "/", 0);
+					p.path_without = ft_strjoin_mod(p.path_without, argv, 1);
+					free_tab(p.path_split);
+					return (p.path_without);
 				}
-				j++;
+				p.j++;
 			}
 		}
-		i++;
+		p.i++;
 	}
-	free_tab(path_split);
+	free_tab(p.path_split);
 	return (NULL);
 }
 
-int	init_param_pipex(t_pipex *pipex, char **argv, char **__environ)
+int	init_param(t_pipex *pipex, char **argv, char **__environ, t_path p)
 {
-	pipex->path_cmd1 = find_path(__environ, get_arg(argv, 2));
+	pipex->path_cmd1 = find_path(__environ, get_arg(argv, 2), p);
 	if (!pipex->path_cmd1)
 		return (err_msg_free(5, pipex));
-	pipex->path_cmd2 = find_path(__environ, get_arg(argv, 3));
+	pipex->path_cmd2 = find_path(__environ, get_arg(argv, 3), p);
 	if (!pipex->path_cmd2)
 		return (err_msg_free(6, pipex));
 	pipex->argv_cmd1 = ft_split(get_arg(argv, 2), ' ');
