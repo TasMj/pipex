@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:30:00 by tmejri            #+#    #+#             */
-/*   Updated: 2023/01/11 14:31:58 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/01/12 19:47:39 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ void	free_all(char *s1, char *s2)
 
 void	free_end(t_pipex *pipex)
 {
+	if (pipex->cmd1)
+		free(pipex->cmd1);
+	if (pipex->cmd2)
+		free(pipex->cmd2);
 	if (pipex->path_cmd1)
 		free(pipex->path_cmd1);
 	if (pipex->path_cmd2)

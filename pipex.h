@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:50:58 by tmejri            #+#    #+#             */
-/*   Updated: 2023/01/11 17:46:28 by tas              ###   ########.fr       */
+/*   Updated: 2023/01/12 19:53:25 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef struct s_pipex
 	int		pip[2];
 	pid_t	pid1;
 	pid_t	pid2;
+	char	*cmd1;
+	char	*cmd2;
 	char	*path_cmd1;
 	char	*path_cmd2;
 	char	**argv_cmd1;
@@ -45,8 +47,9 @@ typedef struct s_pipex
 // FOR PIPEX
 int		try_acces(char *path, char *argv);
 char	*find_path(char **env, char *argv, t_path p);
+char	*get_command(char *argv);
 int		init_param(t_pipex *pipex, char **argv, char **__environ, t_path p);
-char	*get_arg(char **argv, int nb);
+char	*get_arg(char *argv);
 int		first_child(t_pipex *pipex, char **__environ);
 int		second_child(t_pipex *pipex, char **__environ);
 

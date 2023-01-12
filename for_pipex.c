@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   for_pipex.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 18:15:10 by tas               #+#    #+#             */
-/*   Updated: 2023/01/11 17:46:57 by tas              ###   ########.fr       */
+/*   Updated: 2023/01/12 19:53:39 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,29 @@ int	try_acces(char *path, char *argv)
 	}
 	free(s);
 	return (1);
+}
+
+char	*get_command(char *argv)
+{
+	int		i;
+	int		j;
+	char	*cmd;
+
+	i = 0;
+	while (argv[i] && argv[i] != ' ')
+		i++;
+	j = 0;
+	cmd = malloc(sizeof(char) * i + 1);
+	if (!cmd)
+		return (NULL);
+	while (j <= i)
+	{
+		cmd[j] = argv[j];
+		j++;
+	}
+	j--;
+	cmd[j] = '\0';
+	return (cmd);
 }
 
 char	*find_path(char **env, char *argv, t_path p)
@@ -57,33 +80,39 @@ char	*find_path(char **env, char *argv, t_path p)
 
 int	init_param(t_pipex *pipex, char **argv, char **__environ, t_path p)
 {
-	pipex->path_cmd1 = find_path(__environ, get_arg(argv, 2), p);
+	pipex->cmd1 = get_command(argv[2]);
+	if (!pipex->cmd1)
+		return (err_msg_free(9, pipex));
+	pipex->cmd2 = get_command(argv[3]);
+	if (!pipex->cmd2)
+		return (err_msg_free(10, pipex));
+	pipex->path_cmd1 = find_path(__environ, get_arg(pipex->cmd1), p);
 	if (!pipex->path_cmd1)
 		return (err_msg_free(5, pipex));
-	pipex->path_cmd2 = find_path(__environ, get_arg(argv, 3), p);
+	pipex->path_cmd2 = find_path(__environ, get_arg(pipex->cmd2), p);
 	if (!pipex->path_cmd2)
 		return (err_msg_free(6, pipex));
-	pipex->argv_cmd1 = ft_split(get_arg(argv, 2), ' ');
+	pipex->argv_cmd1 = ft_split(get_arg(argv[2]), ' ');
 	if (!pipex->argv_cmd1)
 		return (err_msg_free(7, pipex));
-	pipex->argv_cmd2 = ft_split(get_arg(argv, 3), ' ');
+	pipex->argv_cmd2 = ft_split(get_arg(argv[3]), ' ');
 	if (!pipex->argv_cmd2)
 		return (err_msg_free(8, pipex));
 	return (0);
 }
 
-char	*get_arg(char **argv, int nb)
+char	*get_arg(char *argv)
 {
 	int	i;
 
 	i = 0;
-	if (argv[nb][i] != '/')
-		return (argv[nb]);
+	if (argv[i] != '/')
+		return (argv);
 	else
 	{
 		i++;
-		while (argv[nb][i] != '/')
+		while (argv[i] != '/')
 			i++;
 	}
-	return (argv[nb] + i + 1);
+	return (argv + i + 1);
 }
