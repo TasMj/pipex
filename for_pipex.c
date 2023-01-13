@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 18:15:10 by tas               #+#    #+#             */
-/*   Updated: 2023/01/12 19:53:39 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/01/13 18:13:13 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*find_path(char **env, char *argv, t_path p)
 {
 	p.i = 0;
 	p.j = 0;
-	while (env[p.i])
+	while (env[p.i] && argv)
 	{
 		if (ft_strncmp(env[p.i], "PATH=", 5) == 0)
 		{
@@ -80,10 +80,10 @@ char	*find_path(char **env, char *argv, t_path p)
 
 int	init_param(t_pipex *pipex, char **argv, char **__environ, t_path p)
 {
-	pipex->cmd1 = get_command(argv[2]);
+	pipex->cmd1 = get_command(argv[2] + extract_str(argv[2]));
 	if (!pipex->cmd1)
 		return (err_msg_free(9, pipex));
-	pipex->cmd2 = get_command(argv[3]);
+	pipex->cmd2 = get_command(argv[3] + extract_str(argv[3]));
 	if (!pipex->cmd2)
 		return (err_msg_free(10, pipex));
 	pipex->path_cmd1 = find_path(__environ, get_arg(pipex->cmd1), p);
@@ -111,8 +111,18 @@ char	*get_arg(char *argv)
 	else
 	{
 		i++;
-		while (argv[i] != '/')
-			i++;
+		if (argv[i] != 'b')
+			return (NULL);
+		i++;
+		if (argv[i] != 'i')
+			return (NULL);
+		i++;
+		if (argv[i] != 'n')
+			return (NULL);
+		i++;
+		if (argv[i] != '/')
+			return (NULL);
+		i++;
 	}
-	return (argv + i + 1);
+	return (argv + i);
 }

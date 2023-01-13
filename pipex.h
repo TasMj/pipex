@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:50:58 by tmejri            #+#    #+#             */
-/*   Updated: 2023/01/12 19:53:25 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/01/13 17:53:55 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int		ft_strlen(char *str);
 char	*ft_strjoin_mod(char *s1, char *s2, int mode);
 int		ft_strncmp(char *s1, char *s2, size_t n);
 char	**ft_split(char *s, char c);
+int		extract_str(char *str);
 
 // ERROR & FREE
 int		err_msg(int n);

@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 11:28:38 by tas               #+#    #+#             */
-/*   Updated: 2023/01/11 14:05:25 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/01/13 18:22:23 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,14 @@ int	ft_strncmp(char *s1, char *s2, size_t n)
 			return ((unsigned char)ss1[i] - (unsigned char)ss2[i]);
 	}
 	return (0);
+}
+
+int	extract_str(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] == ' ')
+		i++;
+	return (i);
 }

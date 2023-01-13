@@ -6,7 +6,7 @@
 /*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:11:35 by tmejri            #+#    #+#             */
-/*   Updated: 2023/01/12 19:57:35 by tmejri           ###   ########.fr       */
+/*   Updated: 2023/01/13 17:10:33 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 int	err_msg(int n)
 {
-	if (n == 0)
-		write(1, "pb env\n", 8);
-	else if (n == 1)
+	if (n == 1)
 		write(1, "Merci de bien rentrer 4 arguments\n", 34);
 	else if (n == 2)
 		write(1, "pb open file\n", 13);

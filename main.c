@@ -3,22 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tas <tas@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tmejri <tmejri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:51:40 by tmejri            #+#    #+#             */
-/*   Updated: 2023/01/11 17:46:39 by tas              ###   ########.fr       */
+/*   Updated: 2023/01/13 17:09:35 by tmejri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	*ft_memset(void *s, int c, size_t n)
+{
+	unsigned char	*b;
+	size_t			i;
+
+	i = 0;
+	b = s;
+	while (i < n)
+	{
+		b[i] = c;
+		i++;
+	}	
+	return (s);
+}
 
 int	main(int argc, char **argv, char **__environ)
 {
 	t_pipex	pipex;
 	t_path	p;
 
-	if (!__environ)
-		return (err_msg(0));
+	ft_memset(&pipex, 0, sizeof(t_pipex));
+	ft_memset(&p, 0, sizeof(t_path));
 	if (argc != 5)
 		return (err_msg(1));
 	pipex.infile_fd = open(argv[1], O_RDONLY);
